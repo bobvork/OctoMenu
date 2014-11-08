@@ -15,7 +15,7 @@ class GHManager: NSObject {
     let token = "336156d5ce665107239a0118b2bef6bc00fb66ea"  // TODO: get this out of here
     
     func getPullRequests(handler: ghResponse) {
-        requestWithPath("search/issues?q=assignee:bob-codingdutchmen", responseHandler: handler)
+        requestWithPath("search/issues?q=mentions:bob-codingdutchmen+is:open&sort=updated", responseHandler: handler)
     }
     
     func getIssues(handler: ghResponse) {
