@@ -11,6 +11,8 @@
 		0E09FA591A0C072300D8BC10 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E09FA581A0C072300D8BC10 /* Images.xcassets */; };
 		0E09FA5C1A0C072300D8BC10 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E09FA5A1A0C072300D8BC10 /* MainMenu.xib */; };
 		0E09FA681A0C072300D8BC10 /* GHMenuBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E09FA671A0C072300D8BC10 /* GHMenuBarTests.swift */; };
+		0E09FA721A0C096800D8BC10 /* GHManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E09FA711A0C096800D8BC10 /* GHManager.swift */; };
+		0E34C6B21A0E362C00153A23 /* GHIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E34C6B11A0E362B00153A23 /* GHIssue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,8 @@
 		0E09FA611A0C072300D8BC10 /* GHMenuBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GHMenuBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E09FA661A0C072300D8BC10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E09FA671A0C072300D8BC10 /* GHMenuBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GHMenuBarTests.swift; sourceTree = "<group>"; };
+		0E09FA711A0C096800D8BC10 /* GHManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHManager.swift; sourceTree = "<group>"; };
+		0E34C6B11A0E362B00153A23 /* GHIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHIssue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 				0E09FA581A0C072300D8BC10 /* Images.xcassets */,
 				0E09FA5A1A0C072300D8BC10 /* MainMenu.xib */,
 				0E09FA541A0C072300D8BC10 /* Supporting Files */,
+				0E09FA711A0C096800D8BC10 /* GHManager.swift */,
+				0E34C6B11A0E362B00153A23 /* GHIssue.swift */,
 			);
 			path = GHMenuBar;
 			sourceTree = "<group>";
@@ -205,6 +211,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E09FA721A0C096800D8BC10 /* GHManager.swift in Sources */,
+				0E34C6B21A0E362C00153A23 /* GHIssue.swift in Sources */,
 				0E09FA571A0C072300D8BC10 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +401,7 @@
 				0E09FA6D1A0C072300D8BC10 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E09FA6E1A0C072300D8BC10 /* Build configuration list for PBXNativeTarget "GHMenuBarTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +410,7 @@
 				0E09FA701A0C072300D8BC10 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
