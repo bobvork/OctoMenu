@@ -12,8 +12,6 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     @IBOutlet weak var window: NSWindow!
-    @IBOutlet weak var menu: NSMenu!
-    
     @IBOutlet weak var popover: NSPopover!
     
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1);

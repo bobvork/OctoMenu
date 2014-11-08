@@ -12,6 +12,7 @@ class GHIssue: NSObject {
     var num:Int = -1
     var title:String = ""
     var htmlUrl:String = ""
+    var isPR:Bool = false
     
     init(dict: NSDictionary) {
         if let n = dict.valueForKey("number") as? Int {
@@ -22,6 +23,9 @@ class GHIssue: NSObject {
         }
         if let html = dict.valueForKey("html_url") as? String {
             htmlUrl = html
+        }
+        if let pr = dict.valueForKey("pull_request") as? NSDictionary {
+            isPR = true
         }
         super.init()
     }

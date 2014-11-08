@@ -44,12 +44,14 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         viewForTableColumn tableColumn: NSTableColumn?,
         row: Int) -> NSView? {
             
+            let issue = issues[row]
+            
             if tableColumn?.identifier == "num" {
                 
                 let cellView = tableView.makeViewWithIdentifier("numCell", owner: self) as? NSTableCellView
                 
                 if let view = cellView {
-                    view.textField?.stringValue = "\(issues[row].num)"
+                    view.textField?.stringValue = "\(issue.num)"
                     view.textField?.textColor = NSColor.whiteColor()
                 }
                 return cellView
@@ -57,7 +59,12 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                 
                 let cellView = tableView.makeViewWithIdentifier("IssueCell", owner: self) as? NSTableCellView
                 if let view = cellView {
-                    view.textField?.stringValue = issues[row].title
+                    view.textField?.stringValue = issue.title
+                    var imgName:String = ""
+                    if issue.isPR {
+                        imgName = "NSAddTemplate"
+                    }
+                    view.imageView?.image = NSImage(named: imgName)
                 }
                 
                 return cellView
