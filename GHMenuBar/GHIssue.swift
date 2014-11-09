@@ -13,6 +13,7 @@ class GHIssue: NSObject {
     var title:String = ""
     var htmlUrl:String = ""
     var isPR:Bool = false
+    var repos:String = ""
     
     init(dict: NSDictionary) {
         if let n = dict.valueForKey("number") as? Int {
@@ -26,6 +27,9 @@ class GHIssue: NSObject {
         }
         if let pr = dict.valueForKey("pull_request") as? NSDictionary {
             isPR = true
+        }
+        if let reposUrl = dict.valueForKey("url") as? String {
+            repos = reposUrl.pathComponents[4]
         }
         super.init()
     }

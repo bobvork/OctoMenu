@@ -14,6 +14,8 @@
 		0E09FA721A0C096800D8BC10 /* GHManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E09FA711A0C096800D8BC10 /* GHManager.swift */; };
 		0E34C6B21A0E362C00153A23 /* GHIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E34C6B11A0E362B00153A23 /* GHIssue.swift */; };
 		0E7F9ADF1A0E50E30023C296 /* GHViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7F9ADE1A0E50E30023C296 /* GHViewController.swift */; };
+		0E7F9AE11A0EB1DB0023C296 /* FirstResponderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7F9AE01A0EB1DB0023C296 /* FirstResponderView.swift */; };
+		0E7F9AE31A0EC8480023C296 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7F9AE21A0EC8480023C296 /* SettingsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		0E09FA711A0C096800D8BC10 /* GHManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHManager.swift; sourceTree = "<group>"; };
 		0E34C6B11A0E362B00153A23 /* GHIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHIssue.swift; sourceTree = "<group>"; };
 		0E7F9ADE1A0E50E30023C296 /* GHViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHViewController.swift; sourceTree = "<group>"; };
+		0E7F9AE01A0EB1DB0023C296 /* FirstResponderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstResponderView.swift; sourceTree = "<group>"; };
+		0E7F9AE21A0EC8480023C296 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 				0E09FA711A0C096800D8BC10 /* GHManager.swift */,
 				0E34C6B11A0E362B00153A23 /* GHIssue.swift */,
 				0E7F9ADE1A0E50E30023C296 /* GHViewController.swift */,
+				0E7F9AE01A0EB1DB0023C296 /* FirstResponderView.swift */,
+				0E7F9AE21A0EC8480023C296 /* SettingsController.swift */,
 			);
 			path = GHMenuBar;
 			sourceTree = "<group>";
@@ -214,6 +220,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E7F9AE31A0EC8480023C296 /* SettingsController.swift in Sources */,
+				0E7F9AE11A0EB1DB0023C296 /* FirstResponderView.swift in Sources */,
 				0E09FA721A0C096800D8BC10 /* GHManager.swift in Sources */,
 				0E34C6B21A0E362C00153A23 /* GHIssue.swift in Sources */,
 				0E09FA571A0C072300D8BC10 /* AppDelegate.swift in Sources */,

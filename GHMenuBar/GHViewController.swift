@@ -17,6 +17,12 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     required init?(coder:NSCoder) {
         super.init(coder: coder)
         loadData()
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "loadData",
+            name: "search-changed",
+            object: nil)
     }
     
     func loadData() {
@@ -30,7 +36,10 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                     return GHIssue(dict: d)
                 }
                 self.issues = titles
-                self.tableView.reloadData()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tableView.reloadData()
+                }
+                
             }
         }
     }
@@ -59,10 +68,17 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
                 
                 let cellView = tableView.makeViewWithIdentifier("IssueCell", owner: self) as? NSTableCellView
                 if let view = cellView {
-                    view.textField?.stringValue = issue.title
-                    var imgName:String = ""
+                    var mTitle = NSMutableAttributedString(string: issue.title)
+                    var mSubtitle = NSAttributedString(string: " — \(issue.repos)", attributes: [NSForegroundColorAttributeName : NSColor.redColor(),
+                        NSStrokeColorAttributeName: NSColor.greenColor(),
+                        NSFontSizeAttribute: 8,
+                        NSFontAttributeName: NSFont.systemFontOfSize(8)])
+                    
+                    mTitle.appendAttributedString(mSubtitle)
+                    view.textField?.attributedStringValue = mTitle
+                    var imgName:String = "icon-issue"
                     if issue.isPR {
-                        imgName = "NSAddTemplate"
+                        imgName = "icon-pr"
                     }
                     view.imageView?.image = NSImage(named: imgName)
                 }

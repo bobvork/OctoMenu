@@ -13,13 +13,22 @@ class GHManager: NSObject {
     typealias ghResponse = (response: NSDictionary?, error: NSError?) -> Void
     let baseURL = NSURL(string: "https://api.github.com")
     let token = "336156d5ce665107239a0118b2bef6bc00fb66ea"  // TODO: get this out of here
-    
-    func getPullRequests(handler: ghResponse) {
-        requestWithPath("search/issues?q=mentions:bob-codingdutchmen+is:open&sort=updated", responseHandler: handler)
+    var search:String = ""
+        
+    func loadSearchString() {
+        let userDef = NSUserDefaults.standardUserDefaults()
+        if let savedString = userDef.stringForKey("UserDefSearchString") {
+            search = savedString
+        } else {
+            search = "search/issues?q=mentions:bob-codingdutchmen+is:open&sort=updated"
+            userDef.setValue(search, forKey: "UserDefSearchString")
+            userDef.synchronize()
+        }
     }
     
-    func getIssues(handler: ghResponse) {
-        requestWithPath("search/issues?q=assignee:bob-codingdutchmen+is:open", responseHandler: handler)
+    func getPullRequests(handler: ghResponse) {
+        loadSearchString()
+        requestWithPath(search, responseHandler: handler)
     }
     
     func requestWithPath(path: NSString, responseHandler: ghResponse?) {

@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var popover: NSPopover!
+    @IBOutlet weak var settingsController: SettingsController!
     
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1);
     
@@ -20,26 +21,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     var popoverMonitor:AnyObject?
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-        let icon = NSImage(named: "statusIcon")
+        let icon = NSImage(named: "icon-pr")
         icon?.setTemplate(true)
         statusItem.image = icon
         statusItem.action = "toggleMenu"
     }
     
+    @IBAction func settingsButtonClicked(sender: NSButton) {
+        settingsController.show()
+//        showMenu()
+    }
+    
     func toggleMenu() {
         
-        if let button = statusItem.button? {
-            popover.showRelativeToRect(NSZeroRect, ofView: button, preferredEdge: NSMinYEdge)
-        }
+        showMenu()
         
         self.popoverMonitor = NSEvent.addGlobalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDownMask | NSEventMask.RightMouseDownMask,
             handler: { (event: NSEvent!) -> Void in
+                
+                if let appEvent = NSApplication.sharedApplication().currentEvent {
+                    println("app")
+                    if appEvent == event {
+                        return
+                    }
+                }
+                println(event)
                 if (self.popoverMonitor != nil) {
                     NSEvent.removeMonitor(self.popoverMonitor!)
                 }
                 self.popoverMonitor = nil
                 self.popover.close()
         })
+    }
+    func showMenu() {
+        if let button = statusItem.button? {
+            popover.showRelativeToRect(NSZeroRect, ofView: button, preferredEdge: NSMinYEdge)
+        }
     }
 }
 
