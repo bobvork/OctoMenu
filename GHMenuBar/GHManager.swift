@@ -21,13 +21,16 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
     let timeInterval:NSTimeInterval = 10 // time interval in seconds
     var timer:NSTimer?
     var delegate:GHManagerDelegate?
+    var lastIssueNums:[Int] = []
+    
+    let userDef = NSUserDefaults.standardUserDefaults()
     
     func startRefreshLoop() {
         
         if (timer != nil) {
             timer!.invalidate()
         }
-        
+        self.reloadData()
         timer = NSTimer.scheduledTimerWithTimeInterval(timeInterval,
             target: self,
             selector: "reloadData",
@@ -36,23 +39,51 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
     }
     
     func reloadData() {
-        println("Timer fire")
         
         getPullRequests { [unowned self] (response, error) -> Void in
             if let dict = response {
                 let items = dict["items"]?.allObjects as [NSDictionary]
-                let titles = (dict["items"]?.allObjects as [NSDictionary]).map {
+                let issues = (dict["items"]?.allObjects as [NSDictionary]).map {
                     (var d) -> GHIssue in
                     return GHIssue(dict: d)
                 }
-                self.deliverNotification("Found \(titles.count) issues")
-                self.delegate?.ghManagerDidFindIssues(titles)
+                
+                let issueNums = issues.map({ (i: GHIssue) -> Int in
+                    return i.num
+                })
+                
+                var newIssues:[GHIssue] = []
+                for issue in issues {
+                    if !(contains(self.lastIssueNums, issue.num)) {
+                        newIssues += [issue]
+                    }
+                }
+                
+                self.lastIssueNums = issueNums
+                
+                var message = "Found "
+                switch newIssues.count {
+                case 0:
+                    message += "no new issues"
+                case 1:
+                    message += "1 new issue"
+                case 2...5:
+                    message += "some new issues"
+                default:
+                    message += "lots of new issues"
+                }
+                
+                println(message)
+                
+                if newIssues.count > 0 && self.userDef.boolForKey("UserDefEnableNotifications") {
+                    self.deliverNotification(message)
+                }
+                self.delegate?.ghManagerDidFindIssues(issues)
             }
         }
     }
     
     func loadSearchString() {
-        let userDef = NSUserDefaults.standardUserDefaults()
         if let savedString = userDef.stringForKey("UserDefSearchString") {
             search = savedString
         } else {
@@ -71,7 +102,7 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
 
         let fullURL = NSURL(string: path, relativeToURL: baseURL)
         
-        println("Full url: \(fullURL?.absoluteString) ")
+//        println("Full url: \(fullURL?.absoluteString) ")
         
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let request = NSMutableURLRequest(URL: fullURL!)

@@ -16,12 +16,6 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     
     required init?(coder:NSCoder) {
         super.init(coder: coder)
-//        loadData()
-        
-//        NSNotificationCenter.defaultCenter().addObserver(self,
-//            selector: "loadData",
-//            name: "search-changed",
-//            object: nil)
         
         let manager = GHManager()
         manager.delegate = self
@@ -30,31 +24,10 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     
     func ghManagerDidFindIssues(issues: [GHIssue]) {
         self.issues = issues
-        println("found \(issues.count) issues")
-    
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView.reloadData()
         }
     }
-    
-//    func loadData() {
-//        GHManager().getPullRequests { [unowned self]
-//            (response, error) -> Void in
-//            
-//            if let dict = response {
-//                let items = dict["items"]?.allObjects as [NSDictionary]
-//                let titles = (dict["items"]?.allObjects as [NSDictionary]).map {
-//                    (var d) -> GHIssue in
-//                    return GHIssue(dict: d)
-//                }
-//                self.issues = titles
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.tableView.reloadData()
-//                }
-//            }
-//        }
-//    }
-    
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
         return issues.count

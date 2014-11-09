@@ -33,6 +33,13 @@ class SettingsController: NSWindowController {
             object: nil, userInfo: ["string":search])
     }
     
+    @IBAction func notificationPrefChanged(sender: NSButton) {
+        let enabled = (sender.state == NSOnState)
+        userDef.setBool(enabled, forKey: "UserDefEnableNotifications")
+        userDef.synchronize()
+    }
+    
+    
     func show() {
         window?.makeKeyAndOrderFront(self)
         if let searchString = userDef.stringForKey("UserDefSearchString") {

@@ -824,16 +824,16 @@
         <window title="OctoBar Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="snS-JZ-wua">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="1075" y="916" width="314" height="133"/>
+            <rect key="contentRect" x="1075" y="916" width="314" height="177"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
             <value key="minSize" type="size" width="314" height="133"/>
             <value key="maxSize" type="size" width="600" height="133"/>
             <view key="contentView" id="yjH-cc-qLY">
-                <rect key="frame" x="0.0" y="0.0" width="314" height="133"/>
+                <rect key="frame" x="0.0" y="0.0" width="314" height="177"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ndw-gc-uLf">
-                        <rect key="frame" x="8" y="109" width="298" height="14"/>
+                        <rect key="frame" x="8" y="153" width="298" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Search string:" id="ar6-aW-OfP">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -841,7 +841,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6GO-MB-tIo">
-                        <rect key="frame" x="10" y="88" width="294" height="19"/>
+                        <rect key="frame" x="10" y="132" width="294" height="19"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Eg: is:open" drawsBackground="YES" id="PVo-kf-OgZ">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -849,7 +849,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2zV-Hf-k1g">
-                        <rect key="frame" x="8" y="66" width="298" height="14"/>
+                        <rect key="frame" x="8" y="110" width="298" height="14"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Token:" id="Y2c-jS-1ly">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -857,7 +857,7 @@
                         </textFieldCell>
                     </textField>
                     <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rtX-vc-gaM">
-                        <rect key="frame" x="10" y="45" width="294" height="19"/>
+                        <rect key="frame" x="10" y="89" width="294" height="19"/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="123" drawsBackground="YES" usesSingleLineMode="YES" id="Uyq-dM-H5U">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -880,7 +880,7 @@ DQ
                             <action selector="saveButtonPressed:" target="QOc-bE-gHp" id="jLS-0v-v3J"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wSE-ZI-Tps">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wSE-ZI-Tps">
                         <rect key="frame" x="150" y="3" width="89" height="32"/>
                         <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Haj-59-uy5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -890,14 +890,27 @@ DQ
                             <action selector="applyButtonPressed:" target="QOc-bE-gHp" id="GkP-G0-qh7"/>
                         </connections>
                     </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="GzI-Lk-bYp">
+                        <rect key="frame" x="8" y="65" width="298" height="18"/>
+                        <buttonCell key="cell" type="check" title="Enable notifications" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="guX-tw-j5a">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="notificationPrefChanged:" target="QOc-bE-gHp" id="Gi4-D4-gkM"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="2zV-Hf-k1g" firstAttribute="leading" secondItem="yjH-cc-qLY" secondAttribute="leading" constant="10" id="6Pt-0x-ekU"/>
                     <constraint firstItem="6GO-MB-tIo" firstAttribute="top" secondItem="ndw-gc-uLf" secondAttribute="bottom" constant="2" id="6dg-m0-JY7"/>
                     <constraint firstAttribute="trailing" secondItem="rtX-vc-gaM" secondAttribute="trailing" constant="10" id="8Ko-Z7-Gd2"/>
                     <constraint firstAttribute="trailing" secondItem="6GO-MB-tIo" secondAttribute="trailing" constant="10" id="B8O-vk-lwU"/>
+                    <constraint firstItem="GzI-Lk-bYp" firstAttribute="top" secondItem="rtX-vc-gaM" secondAttribute="bottom" constant="8" id="FQi-yb-BRP"/>
                     <constraint firstItem="6GO-MB-tIo" firstAttribute="leading" secondItem="yjH-cc-qLY" secondAttribute="leading" constant="10" id="G8e-Cz-vuk"/>
+                    <constraint firstAttribute="trailing" secondItem="GzI-Lk-bYp" secondAttribute="trailing" constant="10" id="JE6-Lm-EC0"/>
                     <constraint firstAttribute="trailing" secondItem="ndw-gc-uLf" secondAttribute="trailing" constant="10" id="JFY-ov-Z69"/>
+                    <constraint firstItem="GzI-Lk-bYp" firstAttribute="leading" secondItem="yjH-cc-qLY" secondAttribute="leading" constant="10" id="O8n-V6-vHO"/>
                     <constraint firstItem="rtX-vc-gaM" firstAttribute="top" secondItem="2zV-Hf-k1g" secondAttribute="bottom" constant="2" id="RKl-bT-UlF"/>
                     <constraint firstItem="ndw-gc-uLf" firstAttribute="leading" secondItem="yjH-cc-qLY" secondAttribute="leading" constant="10" id="c26-5f-nps"/>
                     <constraint firstItem="rtX-vc-gaM" firstAttribute="leading" secondItem="yjH-cc-qLY" secondAttribute="leading" constant="10" id="cqg-Aq-Vdr"/>
@@ -910,7 +923,7 @@ DQ
                     <constraint firstAttribute="trailing" secondItem="2zV-Hf-k1g" secondAttribute="trailing" constant="10" id="yfm-Hb-iBZ"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="87" y="878.5"/>
+            <point key="canvasLocation" x="87" y="900.5"/>
         </window>
         <customObject id="QOc-bE-gHp" customClass="SettingsController" customModule="GHMenuBar" customModuleProvider="target">
             <connections>
