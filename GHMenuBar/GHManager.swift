@@ -48,6 +48,10 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
                     return GHIssue(dict: d)
                 }
                 
+                let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+                appDelegate.updateNumberOfIssues(issues.count)
+
+                
                 let issueNums = issues.map({ (i: GHIssue) -> Int in
                     return i.num
                 })

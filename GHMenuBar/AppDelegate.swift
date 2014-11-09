@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     @IBOutlet weak var popover: NSPopover!
     @IBOutlet weak var settingsController: SettingsController!
     
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1);
+    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(40);
     
     var active:Bool = false
     var popoverMonitor:AnyObject?
@@ -24,12 +24,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         let icon = NSImage(named: "icon-pr")
         icon?.setTemplate(true)
         statusItem.image = icon
+        statusItem.title = ""
+
         statusItem.action = "toggleMenu"
     }
     
     @IBAction func settingsButtonClicked(sender: NSButton) {
         settingsController.show()
 //        showMenu()
+    }
+    
+    func updateNumberOfIssues(number:Int) {
+        let attString = NSAttributedString(string: "\(number)",
+            attributes: [NSFontSizeAttribute: 8])
+//        self.statusItem.title = "\(number)"
+        statusItem.attributedTitle = attString
     }
     
     func toggleMenu() {
