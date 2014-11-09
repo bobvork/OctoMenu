@@ -34,29 +34,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     
     func toggleMenu() {
         
-        showMenu()
+        if !popover.shown {
+            showMenu()
+        } else {
+            hideMenu()
+        }
         
         self.popoverMonitor = NSEvent.addGlobalMonitorForEventsMatchingMask(NSEventMask.LeftMouseDownMask | NSEventMask.RightMouseDownMask,
-            handler: { (event: NSEvent!) -> Void in
+            handler: { [unowned self] (event: NSEvent!) -> Void in
                 
                 if let appEvent = NSApplication.sharedApplication().currentEvent {
-                    println("app")
                     if appEvent == event {
                         return
                     }
                 }
-                println(event)
-                if (self.popoverMonitor != nil) {
-                    NSEvent.removeMonitor(self.popoverMonitor!)
-                }
-                self.popoverMonitor = nil
-                self.popover.close()
+                self.hideMenu()
         })
     }
     func showMenu() {
         if let button = statusItem.button? {
             popover.showRelativeToRect(NSZeroRect, ofView: button, preferredEdge: NSMinYEdge)
         }
+    }
+    func hideMenu() {
+        if (self.popoverMonitor != nil) {
+            NSEvent.removeMonitor(self.popoverMonitor!)
+        }
+        self.popoverMonitor = nil
+        self.popover.close()
     }
 }
 

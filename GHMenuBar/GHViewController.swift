@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, GHManagerDelegate {
     
     @IBOutlet weak var tableView: NSTableView!
     
@@ -16,33 +16,44 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
     
     required init?(coder:NSCoder) {
         super.init(coder: coder)
-        loadData()
+//        loadData()
         
+//        NSNotificationCenter.defaultCenter().addObserver(self,
+//            selector: "loadData",
+//            name: "search-changed",
+//            object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "loadData",
-            name: "search-changed",
-            object: nil)
+        let manager = GHManager()
+        manager.delegate = self
+        manager.startRefreshLoop()
     }
     
-    func loadData() {
-        GHManager().getPullRequests { [unowned self]
-            (response, error) -> Void in
-            
-            if let dict = response {
-                let items = dict["items"]?.allObjects as [NSDictionary]
-                let titles = (dict["items"]?.allObjects as [NSDictionary]).map {
-                    (var d) -> GHIssue in
-                    return GHIssue(dict: d)
-                }
-                self.issues = titles
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tableView.reloadData()
-                }
-                
-            }
+    func ghManagerDidFindIssues(issues: [GHIssue]) {
+        self.issues = issues
+        println("found \(issues.count) issues")
+    
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
         }
     }
+    
+//    func loadData() {
+//        GHManager().getPullRequests { [unowned self]
+//            (response, error) -> Void in
+//            
+//            if let dict = response {
+//                let items = dict["items"]?.allObjects as [NSDictionary]
+//                let titles = (dict["items"]?.allObjects as [NSDictionary]).map {
+//                    (var d) -> GHIssue in
+//                    return GHIssue(dict: d)
+//                }
+//                self.issues = titles
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
+//    }
     
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
@@ -93,7 +104,9 @@ class GHViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSo
         if self.tableView.selectedRow >= 0 {
             NSWorkspace.sharedWorkspace().openURL(NSURL(string: issues[self.tableView.selectedRow].htmlUrl)!)
             self.tableView.deselectAll(self)
+            let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
             
+            appDelegate.hideMenu()
         }
     }
 }

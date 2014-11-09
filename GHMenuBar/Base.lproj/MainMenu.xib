@@ -798,7 +798,7 @@
                 <constraint firstItem="JEk-xa-JQA" firstAttribute="top" secondItem="Htq-uV-2Fm" secondAttribute="bottom" constant="3" id="Tet-6F-KAN"/>
                 <constraint firstItem="Htq-uV-2Fm" firstAttribute="top" secondItem="Tba-TK-nS6" secondAttribute="top" constant="5" id="jhs-xm-8SA"/>
             </constraints>
-            <point key="canvasLocation" x="48" y="590"/>
+            <point key="canvasLocation" x="58" y="532"/>
         </customView>
         <viewController id="HC1-cy-tK7" userLabel="Popover View Controller" customClass="GHViewController" customModule="GHMenuBar" customModuleProvider="target">
             <connections>

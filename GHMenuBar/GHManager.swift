@@ -8,13 +8,49 @@
 
 import Cocoa
 
-class GHManager: NSObject {
+protocol GHManagerDelegate {
+    func ghManagerDidFindIssues(issues: [GHIssue])
+}
+
+class GHManager: NSObject, NSUserNotificationCenterDelegate {
     
     typealias ghResponse = (response: NSDictionary?, error: NSError?) -> Void
     let baseURL = NSURL(string: "https://api.github.com")
     let token = "336156d5ce665107239a0118b2bef6bc00fb66ea"  // TODO: get this out of here
     var search:String = ""
+    let timeInterval:NSTimeInterval = 10 // time interval in seconds
+    var timer:NSTimer?
+    var delegate:GHManagerDelegate?
+    
+    func startRefreshLoop() {
         
+        if (timer != nil) {
+            timer!.invalidate()
+        }
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(timeInterval,
+            target: self,
+            selector: "reloadData",
+            userInfo: nil,
+            repeats: true)
+    }
+    
+    func reloadData() {
+        println("Timer fire")
+        
+        getPullRequests { [unowned self] (response, error) -> Void in
+            if let dict = response {
+                let items = dict["items"]?.allObjects as [NSDictionary]
+                let titles = (dict["items"]?.allObjects as [NSDictionary]).map {
+                    (var d) -> GHIssue in
+                    return GHIssue(dict: d)
+                }
+                self.deliverNotification("Found \(titles.count) issues")
+                self.delegate?.ghManagerDidFindIssues(titles)
+            }
+        }
+    }
+    
     func loadSearchString() {
         let userDef = NSUserDefaults.standardUserDefaults()
         if let savedString = userDef.stringForKey("UserDefSearchString") {
@@ -51,28 +87,42 @@ class GHManager: NSObject {
             var jsonError:NSError?
             if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSArray {
                 
-//                println("got array: \(json)")
                 if let handler = responseHandler {
                     handler(response: ["items":json], error: nil)
                 }
                 
             } else if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonError) as? NSDictionary {
                 
-//                println("got dictionary: \(json)")
                 if let handler = responseHandler {
                     handler(response: json, error: nil)
                 }
                 
-                
             } else {
                 println("Error parsing json: \(jsonError)")
             }
-            
         })
         
         task.resume()
-        
+    }
+    
+    func deliverNotification(title: String) {
+        let notification = NSUserNotification()
+        notification.title = "OctoBar"
+        notification.subtitle = title
+        notification.actionButtonTitle = "Show me"
+        notification.hasActionButton = true
+        let notCenter = NSUserNotificationCenter.defaultUserNotificationCenter()
+        notCenter.delegate = self
+        notCenter.deliverNotification(notification)
         
     }
-   
+    
+    func userNotificationCenter(center: NSUserNotificationCenter,
+        didActivateNotification notification: NSUserNotification) {
+            
+            let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+            
+            appDelegate.showMenu()
+            
+    }
 }
