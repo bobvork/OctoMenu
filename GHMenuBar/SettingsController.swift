@@ -17,17 +17,15 @@ class SettingsController: NSWindowController {
     let userDef = NSUserDefaults.standardUserDefaults()
     
     @IBAction func saveButtonPressed(sender: AnyObject) {
-        userDef.setValue(searchField.stringValue, forKey: "UserDefSearchString")
-        userDef.synchronize()
-        println(searchField.stringValue)
-
+        applyButtonPressed(sender)
+        hide()
     }
     
     @IBAction func applyButtonPressed(sender: AnyObject) {
         let search = searchField.stringValue
         userDef.setValue(search, forKey: "UserDefSearchString")
+        userDef.setValue(tokenField.stringValue, forKey: "UserDefTokenKey")
         userDef.synchronize()
-        println(searchField.stringValue)
         
         NSNotificationCenter.defaultCenter().postNotificationName("search-changed",
             object: nil, userInfo: ["string":search])

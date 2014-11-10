@@ -16,7 +16,7 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
     
     typealias ghResponse = (response: NSDictionary?, error: NSError?) -> Void
     let baseURL = NSURL(string: "https://api.github.com")
-    let token = ""  // TODO: get this out of here
+    
     var search:String = ""
     let timeInterval:NSTimeInterval = 10 // time interval in seconds
     var timer:NSTimer?
@@ -24,6 +24,14 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
     var lastIssueNums:[Int] = []
     
     let userDef = NSUserDefaults.standardUserDefaults()
+    
+    
+    func token() -> String {
+        if let gToken = userDef.stringForKey("UserDefTokenKey") {
+            return gToken
+        }
+        return ""
+    }
     
     func startRefreshLoop() {
         
@@ -42,7 +50,9 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
         
         getPullRequests { [unowned self] (response, error) -> Void in
             if let dict = response {
-                let items = dict["items"]?.allObjects as [NSDictionary]
+                if (dict["items"] == nil) {
+                    return;
+                }
                 let issues = (dict["items"]?.allObjects as [NSDictionary]).map {
                     (var d) -> GHIssue in
                     return GHIssue(dict: d)
@@ -111,7 +121,9 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let request = NSMutableURLRequest(URL: fullURL!)
         
-        request.setValue("token \(self.token)", forHTTPHeaderField: "Authorization")
+        let token = self.token()
+        println("token: \(token)")
+        request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
         
         let task = session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response:NSURLResponse!, error:NSError!) -> Void in
             
