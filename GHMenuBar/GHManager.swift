@@ -16,7 +16,7 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
     
     typealias ghResponse = (response: NSDictionary?, error: NSError?) -> Void
     let baseURL = NSURL(string: "https://api.github.com")
-    let token = "336156d5ce665107239a0118b2bef6bc00fb66ea"  // TODO: get this out of here
+    let token = ""  // TODO: get this out of here
     var search:String = ""
     let timeInterval:NSTimeInterval = 10 // time interval in seconds
     var timer:NSTimer?
