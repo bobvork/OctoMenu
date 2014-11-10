@@ -122,7 +122,6 @@ class GHManager: NSObject, NSUserNotificationCenterDelegate {
         let request = NSMutableURLRequest(URL: fullURL!)
         
         let token = self.token()
-        println("token: \(token)")
         request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
         
         let task = session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response:NSURLResponse!, error:NSError!) -> Void in
